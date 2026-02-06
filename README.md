@@ -12,17 +12,16 @@ The goal is to build a reliable, WAF-approved (Wife/Partner Acceptance Factor) f
 
 ## Documentation
 
-The project specification is broken down into the following documents:
+The project specification is broken down into the following formal technical documents:
 
--   **[01. Infrastructure & Ecosystem](docs/01_infrastructure_and_ecosystem.md)**
-    -   *Part 1: Infrastructure (The Virtual Hardware)* - Setting up Hyper-V on Windows 11.
-    -   *Part 2: Ecosystem & Data Layer* - Configuring Tailscale, VS Code, and Google Sync.
--   **[02. Frontend & Dashboard](docs/02_frontend_spec.md)**
-    -   *Part 3: Frontend Specification* - Setting up HACS, Layout Card, Mushroom, and Atomic Calendar Revive to achieve the "Skylight" look.
--   **[03. Operations & Maintenance](docs/03_operations_and_maintenance.md)**
-    -   *Part 4: Operations & Physical Logic* - Battery safety automations, morning/night routines, and backup strategies.
--   **[04. Automation Code Snippets](docs/04_automation_code.md)**
-    -   Ready-to-use YAML code for battery management and screen lifecycle automations.
+-   **[01. System Architecture](docs/01_system_architecture.md)**
+    -   Hardware specifications (Lenovo Tiny), Hyper-V configuration, and Network setup.
+-   **[02. Software Ecosystem](docs/02_software_ecosystem.md)**
+    -   System applications (Tailscale, VS Code) and User Data integrations (Google Sync).
+-   **[03. Frontend & Dashboard](docs/03_frontend_dashboard.md)**
+    -   UI design specifications, HACS prerequisites, and Tablet configuration (Kiosk Mode).
+-   **[04. Automations & Maintenance](docs/04_automations_and_maintenance.md)**
+    -   Operational logic, Battery Safety automations, and Screen Lifecycle management.
 
 ## Roadmap
 
