@@ -1,18 +1,18 @@
-Here is the final piece of your toolkit. You can paste this directly into your Cursor/Gemini Agent to generate the automation file, or paste it directly into your automations.yaml.
-This code handles Part 4 (Operations & Safety).
-The "Day 2" Operations Prompt
-> Context:
-> I need to protect the lithium battery of my wall-mounted Fire Tablet and manage its screen state.
-> Requirements:
->  * Battery Protection: Toggle a smart plug (switch.tablet_charger) based on the tablet's battery level (sensor.fire_tablet_battery_level) to keep it between 25% and 80%.
->  * Morning Refresh: At 6:30 AM, wake the screen, set brightness to 100%, and reload the dashboard (to clear any browser memory leaks).
->  * Night Mode: At 10:30 PM, turn the screen off completely to save power.
-> Output:
-> Please write the Home Assistant Automation YAML for these logic flows. Use modern Home Assistant syntax (using action: instead of service:).
-> 
-The Manual Code (If you prefer to copy-paste)
-If you want to verify the code yourself, here is the robust YAML implementation.
-1. Battery Protection (Anti-Swell)
+# Automations & Maintenance
+
+This document details the operational logic required to maintain the hardware health and software reliability of the wall panel. It includes the automation strategies for battery management ("Anti-Spicy Pillow" protocol) and screen lifecycle management.
+
+## 1. Battery Safety Automation
+**Goal:** Prevent battery swelling and extend device lifespan by keeping the lithium battery charge between 25% and 80%.
+
+*   **Hardware:** Smart Plug (e.g., Kasa, Sonoff) controlling the tablet's charger.
+*   **Sensor:** `sensor.fire_tablet_battery_level` (Exposed via Fully Kiosk integration).
+*   **Logic:**
+    *   **IF** battery < 25% **THEN** Turn Plug ON.
+    *   **IF** battery > 80% **THEN** Turn Plug OFF.
+
+### YAML Implementation
+```yaml
 alias: "Wall Panel - Battery Manager"
 description: "Cycles the charger to keep battery healthy (25-80%)"
 mode: single
@@ -43,8 +43,16 @@ action:
           - action: switch.turn_off
             target:
               entity_id: switch.tablet_charger
+```
 
-2. Morning/Night Lifecycle
+## 2. Screen Lifecycle Management
+**Goal:** Automate screen brightness and ensure long-term stability by refreshing the browser daily.
+
+*   **Morning Routine (06:30):** Wake screen, maximize brightness, and force a page reload to clear memory leaks.
+*   **Night Routine (22:30):** Turn screen off to conserve power and reduce light pollution.
+
+### YAML Implementation
+```yaml
 alias: "Wall Panel - Daily Cycle"
 description: "Manages screen brightness and memory refresh"
 trigger:
@@ -84,12 +92,13 @@ action:
           - action: fully_kiosk.screen_off
             target:
               entity_id: media_player.fire_tablet
+```
 
-Project Summary: Your Next Steps
-You now have the complete blueprint. Here is your execution order:
- * The Host: Install Hyper-V and Home Assistant OS on your Lenovo Tiny.
- * The Bridge: Install HACS inside Home Assistant.
- * The Look: Use the Part 3 Prompt to generate the Dashboard YAML.
- * The Brain: Use the Part 4 Code (above) to set up the automations.
- * The Hardware: Debloat the Tablet (Fire Toolbox), install Fully Kiosk, and mount it.
-Would you like me to combine all these prompts (Part 3 & 4) into a single "Master Instruction File" that you can save as a markdown document? This way you have the entire project documentation in one file.
+## 3. Disaster Recovery (Backup Strategy)
+To ensure system resilience, the following backup policy is enforced via the **Home Assistant Google Drive Backup** Add-on.
+
+*   **Frequency:** Daily at 03:00 AM.
+*   **Retention Policy:**
+    *   Local: Keep last 3 backups.
+    *   Cloud (Google Drive): Keep last 5 backups.
+*   **Recovery RTO (Recovery Time Objective):** < 30 minutes (Reinstall HAOS -> Restore Snapshot).
